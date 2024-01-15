@@ -310,12 +310,11 @@ cell xilinx.com:ip:axis_subset_converter subset_0 {
 cell pavel-demin:user:axis_misc_writer misc_0 {
   S_AXIS_TDATA_WIDTH 96
   M_AXIS_TDATA_WIDTH 128
-  CNTR_WIDTH 24
-  MISC_WIDTH 8
+  CNTR_WIDTH 16
+  MISC_WIDTH 16
 } {
   S_AXIS subset_0/M_AXIS
   cfg_data slice_6/dout
-  misc_data exp_n_tri_io
   aclk pll_0/clk_out1
   aresetn slice_0/dout
 }
@@ -506,4 +505,15 @@ cell xilinx.com:ip:xlconcat concat_1 {
   In0 mult_4/m_axis_dout_tdata
   In1 mult_5/m_axis_dout_tdata
   dout dac_0/s_axis_tdata
+}
+
+# concat gpio and feedback
+cell xilinx.com:ip:xlconcat concat_2 {
+  NUM_PORTS 2
+  IN0_WIDTH 8
+  IN1_WIDTH 8
+} {
+  In0 exp_n_tri_io
+  In1 misc_1/misc_data
+  dout misc_0/misc_data
 }

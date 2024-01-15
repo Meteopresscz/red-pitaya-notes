@@ -48,6 +48,8 @@ module axis_ram_reader #
   reg int_arvalid_reg, int_rvalid_reg;
   reg [ADDR_WIDTH-1:0] int_addr_reg;
 
+  reg [ADDR_WIDTH-1:0] cfg_data_local;
+
   wire int_empty_wire, int_valid_wire;
   wire int_arvalid_wire, int_arready_wire;
   wire [COUNT_WIDTH-1:0] int_count_wire;
@@ -91,10 +93,18 @@ module axis_ram_reader #
         int_rvalid_reg <= 1'b1;
       end
 
-      if(int_arvalid_wire & int_arready_wire)
+      if(int_arvalid_wire & int_arready_wire) // when we need to produce next sample
       begin
         int_arvalid_reg <= 1'b0;
-        int_addr_reg <= int_addr_reg < cfg_data ? int_addr_reg + 1'b1 : {(ADDR_WIDTH){1'b0}};
+        //int_addr_reg <= int_addr_reg < cfg_data ? int_addr_reg + 1'b1 : {(ADDR_WIDTH){1'b0}};   // int_addr_reg counts 0 to cfg_data
+
+        if(int_addr_reg < cfg_data_local) begin
+          int_addr_reg <= int_addr_reg + 1'b1;
+        end else begin
+          int_addr_reg <= {cfg_data[15:14], {(14){1'b0}}}; // bits 15:14 = at which quarter of the buffer to start; then start with the low 14 bits zero - the beginning of the quarter
+          cfg_data_local <= cfg_data;
+        end
+
       end
 
       if(m_axi_rlast)
