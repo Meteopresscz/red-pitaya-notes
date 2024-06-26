@@ -306,16 +306,6 @@ cell xilinx.com:ip:axis_subset_converter subset_0 {
   aresetn slice_0/dout
 }
 
-# Concat GPIO and feedback
-cell xilinx.com:ip:xlconcat concat_0 {
-  NUM_PORTS 2
-  IN0_WIDTH 8
-  IN1_WIDTH 8
-} {
-  In0 exp_n_tri_io
-  In1 misc_1/misc_data
-}
-
 # Create axis_misc_writer
 cell pavel-demin:user:axis_misc_writer misc_0 {
   S_AXIS_TDATA_WIDTH 96
@@ -325,7 +315,6 @@ cell pavel-demin:user:axis_misc_writer misc_0 {
 } {
   S_AXIS subset_0/M_AXIS
   cfg_data slice_6/dout
-  misc_data concat_0/dout
   aclk pll_0/clk_out1
   aresetn slice_0/dout
 }
@@ -390,6 +379,17 @@ cell pavel-demin:user:axis_misc_reader misc_1 {
   misc_data exp_p_tri_io
   aclk pll_0/clk_out1
   aresetn slice_0/dout
+}
+
+# Concat GPIO and feedback
+cell xilinx.com:ip:xlconcat concat_0 {
+  NUM_PORTS 2
+  IN0_WIDTH 8
+  IN1_WIDTH 8
+} {
+  In0 exp_n_tri_io
+  In1 misc_1/misc_data
+  dout misc_0/misc_data
 }
 
 # Create fir_compiler

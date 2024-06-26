@@ -1,7 +1,7 @@
 
 `timescale 1 ns / 1 ps
 
-module axis_ram_reader #
+module axis_ram_reader_radar #
 (
   parameter integer ADDR_WIDTH = 16,
   parameter integer AXI_ID_WIDTH = 6,
