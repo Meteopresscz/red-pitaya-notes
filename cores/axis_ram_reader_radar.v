@@ -96,7 +96,7 @@ module axis_ram_reader_radar #
         end
         else
         begin
-          int_addr_reg <= {cfg_data[15:14], 14'd0}; // bits 15:14 = at which quarter of the buffer to start; then start with the low 14 bits zero - the beginning of the quarter
+          int_addr_reg <= {cfg_data[(ADDR_WIDTH-1):(ADDR_WIDTH-2)], {(ADDR_WIDTH-2){1'd0}}}; // Last two bits = at which quarter of the buffer to start; then start with the low 14 bits zero - the beginning of the quarter
           int_data_reg <= cfg_data;
         end
       end
