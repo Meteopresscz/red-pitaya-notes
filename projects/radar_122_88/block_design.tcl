@@ -96,7 +96,7 @@ create_bd_port -dir O -from 7 -to 0 exp_p_tri_io
 # Create axi_hub
 cell pavel-demin:user:axi_hub hub_0 {
   CFG_DATA_WIDTH 192
-  STS_DATA_WIDTH 32
+  STS_DATA_WIDTH 64
 } {
   S_AXI ps_0/M_AXI_GP0
   aclk pll_0/clk_out1
@@ -359,8 +359,8 @@ cell pavel-demin:user:axis_ram_writer writer_0 {
 # Create xlconcat
 cell xilinx.com:ip:xlconcat concat_1 {
   NUM_PORTS 2
-  IN0_WIDTH 16
-  IN1_WIDTH 16
+  IN0_WIDTH 32
+  IN1_WIDTH 32
 } {
   In0 reader_0/sts_data
   In1 writer_0/sts_data

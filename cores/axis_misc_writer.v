@@ -76,7 +76,7 @@ module axis_misc_writer #
 
   assign s_axis_tready = int_enbl_reg & m_axis_tready;
 
-  assign m_axis_tdata = {misc_data, int_cntr_reg, s_axis_tdata};
+  assign m_axis_tdata = {misc_data, int_cntr_reg[15:0], s_axis_tdata};
   assign m_axis_tvalid = int_tvalid_wire;
 
 endmodule
