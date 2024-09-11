@@ -369,13 +369,22 @@ cell xilinx.com:ip:xlconcat concat_1 {
 
 # TX
 
+cell pavel-demin:user:axis_rle_interpreter rle_0 {
+  AXIS_TDATA_WIDTH 128
+  RLE_TDATA_WIDTH 8
+} {
+  S_AXIS reader_0/M_AXIS
+  aclk pll_0/clk_out1
+  aresetn slice_0/dout
+}
+
 # Create axis_misc_reader
 cell pavel-demin:user:axis_misc_reader misc_1 {
   S_AXIS_TDATA_WIDTH 128
   M_AXIS_TDATA_WIDTH 96
   MISC_WIDTH 8
 } {
-  S_AXIS reader_0/M_AXIS
+  S_AXIS rle_0/M_AXIS
   misc_data exp_p_tri_io
   aclk pll_0/clk_out1
   aresetn slice_0/dout
